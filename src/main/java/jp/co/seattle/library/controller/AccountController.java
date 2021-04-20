@@ -56,24 +56,9 @@ public class AccountController {
         UserInfo userInfo = new UserInfo();
         userInfo.setEmail(email);
 
-        //バリデーションチェック
-        boolean isValidEmail = email.matches("^[A-Za-z0-9]+@[A-Za-z0-9]+$");
-        boolean isValidPW = password.matches("^[A-Za-z0-9]+$");
-        boolean isValidPWCheck = passwordForCheck.matches("^[A-Za-z0-9]+$");
 
         // TODO バリデーションチェック、パスワード一致チェック実装
-        if (!(isValidEmail)) {
-            model.addAttribute("message1", "メールアドレスが適切ではありません。");
-            return "createAccount";
-        }
-        if (!(isValidPW)) {
-            model.addAttribute("message3", "パスワードが適切ではありません。");
-            return "createAccount";
-        }
-        if (!(password.equals(passwordForCheck))) {
-            model.addAttribute("message2", "パスワードが一致しません。");
-            return "createAccount";
-        }
+
         userInfo.setPassword(password);
         usersService.registUser(userInfo);
 

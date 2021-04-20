@@ -31,25 +31,7 @@
                         <input type="password" class="input" id="password" name="password" required>
                         <label class="label">パスワード（確認用）</label>
                         <input type="password" class="input" id="passwordForCheck" name="passwordForCheck" required>
-                  
-                        
-                        
                         <input type="submit" class="button primary" value="作成する" >
-                        
-                        <c:if test="${!empty message1}">
-                           <div class="error">${message1}</div>
-                        </c:if>
-                        
-                        <c:if test="${!empty message2}">
-                           <div class="error">${message2}</div>
-                        </c:if>
-                        
-                        <c:if test="${!empty message3}">
-                           <div class="error">${message3}</div>
-                        </c:if>
-                        
-                        
-                        
                     </form>
                 </div>
                 <div class="authorization_navi">
