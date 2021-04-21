@@ -32,9 +32,14 @@
                         <input type="password" class="input" id="password" name="password" required/>
 
                         <input type="submit" class="button primary" value="ログイン" />
-                         <c:if test="${!empty errorMessage}">
+                        
+                       <%--   <c:if test="${!empty errorMessage}">
 							 <div class="error">${errorMessage}</div>
-						</c:if>
+						</c:if> --%>
+      
+                         <c:if test="${!empty loginError}">
+                             <div class="error">${loginError}</div>
+                        </c:if>
 
                     </form>
                 </div>
