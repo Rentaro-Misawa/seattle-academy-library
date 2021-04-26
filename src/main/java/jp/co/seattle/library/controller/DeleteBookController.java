@@ -19,6 +19,7 @@ public class DeleteBookController {
     final static Logger logger = LoggerFactory.getLogger(DeleteBookController.class);
 
 
+
     /**
      * 対象書籍を削除する
      *
@@ -36,7 +37,7 @@ public class DeleteBookController {
         logger.info("Welcome delete! The client locale is {}.", locale);
 
 
-        return "";
+        return "home";
 
     }
 
