@@ -56,6 +56,13 @@ public class BooksService {
         return bookDetailsInfo;
     }
 
+    public void deleteBooks(int bookId) {
+
+        String sql = "DELETE FROM books WHERE ID=" + bookId + ";";
+
+        jdbcTemplate.update(sql);
+    }
+
 
 
     /**
