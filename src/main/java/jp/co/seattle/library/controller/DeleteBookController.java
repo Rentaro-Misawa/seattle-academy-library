@@ -24,6 +24,7 @@ public class DeleteBookController {
     @Autowired
     private BooksService booksService;
 
+
     /**
      * 対象書籍を削除する
      *
@@ -44,6 +45,7 @@ public class DeleteBookController {
 
         model.addAttribute("bookList", booksService.getBookList());
         return "home";
+
 
     }
 

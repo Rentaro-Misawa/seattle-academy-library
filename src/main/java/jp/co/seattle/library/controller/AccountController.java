@@ -56,6 +56,7 @@ public class AccountController {
         UserInfo userInfo = new UserInfo();
         userInfo.setEmail(email);
 
+
         // TODO バリデーションチェック、パスワード一致チェック実装
         //バリデーションチェック
         boolean isValidEmail = email.matches("^[A-Za-z0-9]+@[A-Za-z0-9]+$");
@@ -84,4 +85,3 @@ public class AccountController {
     }
 
 }
-
