@@ -33,7 +33,7 @@ public class BooksService {
 
         // TODO 取得したい情報を取得するようにSQLを修正
         List<BookInfo> getedBookList = jdbcTemplate.query(
-                "select * from books",
+                "select id,title,author,publisher,publish_date,thumbnail_url from books order by title asc",
                 new BookInfoRowMapper());
 
         return getedBookList;
@@ -54,6 +54,13 @@ public class BooksService {
         BookDetailsInfo bookDetailsInfo = jdbcTemplate.queryForObject(sql, new BookDetailsInfoRowMapper());
 
         return bookDetailsInfo;
+    }
+
+    public void deleteBooks(int bookId) {
+
+        String sql = "DELETE FROM books WHERE ID=" + bookId + ";";
+
+        jdbcTemplate.update(sql);
     }
 
 
