@@ -76,7 +76,10 @@
                             <input type="text" name="publishDate" value="${bookInfo.publishDate}">
                         </c:if>
                         <c:if test="${empty bookInfo}">
-                           <input type="text" name="publishDate">     
+                           <input type="text" name="publishDate">  
+                            <c:if test="${!empty publishDateError}">
+                           <div class="error">${publishDateError}</div> 
+                            </c:if>  
                         </c:if>
                     </div>
                     <div>
@@ -85,7 +88,10 @@
                             <input type="text" name="isbn" value="${bookInfo.isbn}">
                         </c:if>
                         <c:if test="${empty bookInfo}">
-                           <input type="text" name="isbn">     
+                           <input type="text" name="isbn"> 
+                            <c:if test="${!empty isbnError}">
+                           <div class="error">${isbnError}</div> 
+                            </c:if>      
                         </c:if>
                     </div>
                      <div>

@@ -56,6 +56,16 @@ public class BooksService {
         return bookDetailsInfo;
     }
 
+    public int getBookId() {
+
+        String sql = "SELECT MAX(id) FROM books";
+
+        jdbcTemplate.queryForObject(sql, Integer.class);
+
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+
+    }
+
     public void deleteBooks(int bookId) {
 
         String sql = "DELETE FROM books WHERE ID=" + bookId + ";";
