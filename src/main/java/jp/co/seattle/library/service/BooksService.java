@@ -18,6 +18,7 @@ import jp.co.seattle.library.rowMapper.BookInfoRowMapper;
  * 
  *  booksテーブルに関する処理を実装する
  */
+
 @Service
 public class BooksService {
     final static Logger logger = LoggerFactory.getLogger(BooksService.class);
@@ -56,6 +57,21 @@ public class BooksService {
         return bookDetailsInfo;
     }
 
+
+    /**
+     * 追加したした書籍のIDを取得
+     * @return　データベースからBookIDの最大値を取得
+     */
+    public int getBookId() {
+
+        String sql = "SELECT MAX(id) FROM books";
+
+        jdbcTemplate.queryForObject(sql, Integer.class);
+
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+
+    }
+
     public void deleteBooks(int bookId) {
 
         String sql = "DELETE FROM books WHERE ID=" + bookId + ";";
@@ -72,12 +88,16 @@ public class BooksService {
      */
     public void registBook(BookDetailsInfo bookInfo) {
 
-        String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url,reg_date,upd_date) VALUES ('"
+        String sql = "INSERT INTO books (title, author,publisher,publish_date,thumbnail_name,thumbnail_url,reg_date,upd_date,isbn,description) VALUES ('"
                 + bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
+                + bookInfo.getPublishDate() + "','"
                 + bookInfo.getThumbnailName() + "','"
                 + bookInfo.getThumbnailUrl() + "',"
+                //タスク５　出版日、ISBN、説明文を追加
                 + "sysdate(),"
-                + "sysdate())";
+                + "sysdate(),'"
+                + bookInfo.getIsbn() + "','"
+                + bookInfo.getDescription() + "')";
 
         jdbcTemplate.update(sql);
     }
