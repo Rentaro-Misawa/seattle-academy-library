@@ -57,9 +57,10 @@ public class BooksService {
         return bookDetailsInfo;
     }
 
+
     /**
-     * @author user
-     * 書籍の削除
+     * 追加したした書籍のIDを取得
+     * @return　データベースからBookIDの最大値を取得
      */
     public int getBookId() {
 
