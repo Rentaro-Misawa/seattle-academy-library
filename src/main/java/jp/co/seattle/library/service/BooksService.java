@@ -56,6 +56,23 @@ public class BooksService {
         return bookDetailsInfo;
     }
 
+    /**
+     * 追加したした書籍のIDを取得
+     * @return　データベースからBookIDの最大値を取得
+     */
+    public int getBookId() {
+        String sql = "SELECT MAX(id) FROM books";
+
+        jdbcTemplate.queryForObject(sql, Integer.class);
+
+        return jdbcTemplate.queryForObject(sql, Integer.class);
+
+    }
+
+    /**
+     * 書籍を削除する
+     * @param bookId
+     */
     public void deleteBooks(int bookId) {
 
         String sql = "DELETE FROM books WHERE ID=" + bookId + ";";
@@ -72,13 +89,34 @@ public class BooksService {
      */
     public void registBook(BookDetailsInfo bookInfo) {
 
-        String sql = "INSERT INTO books (title, author,publisher,thumbnail_name,thumbnail_url,reg_date,upd_date) VALUES ('"
+        String sql = "INSERT INTO books (title, author,publisher,publish_date,thumbnail_name,thumbnail_url,reg_date,upd_date,isbn,description) VALUES ('"
                 + bookInfo.getTitle() + "','" + bookInfo.getAuthor() + "','" + bookInfo.getPublisher() + "','"
+                + bookInfo.getPublishDate() + "','"
                 + bookInfo.getThumbnailName() + "','"
                 + bookInfo.getThumbnailUrl() + "',"
+                //タスク５　出版日、ISBN、説明文を追加
                 + "sysdate(),"
-                + "sysdate())";
+                + "sysdate(),'"
+                + bookInfo.getIsbn() + "','"
+                + bookInfo.getDescription() + "')";
 
         jdbcTemplate.update(sql);
     }
-}
+
+    public void editBook(BookDetailsInfo bookInfo) {
+        String sql = "UPDATE books SET title='" + bookInfo.getTitle()
+                + "',author='" + bookInfo.getAuthor()
+                + "',publisher='" + bookInfo.getPublisher()
+                + "',publish_date='" + bookInfo.getPublishDate()
+                + "',thumbnail_url='" + bookInfo.getThumbnailUrl()
+                + "',thumbnail_name='" + bookInfo.getThumbnailName()
+                + "',upd_date=sysdate()"
+                + ",isbn='" + bookInfo.getIsbn()
+                + "',description='" + bookInfo.getDescription()
+                + "'where id=" + bookInfo.getBookId() + ";";
+        jdbcTemplate.update(sql);
+    }
+
+
+    }
+
