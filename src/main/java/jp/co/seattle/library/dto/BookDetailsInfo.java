@@ -24,9 +24,11 @@ public class BookDetailsInfo {
 
     private String thumbnailName;
 
+
     private String publishDate;
 
     private String isbn;
+
 
     private String description;
 
@@ -47,5 +49,4 @@ public class BookDetailsInfo {
         this.thumbnailUrl = thumbnailUrl;
         this.thumbnailName = thumbnailName;
     }
-
 }

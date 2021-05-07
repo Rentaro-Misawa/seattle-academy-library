@@ -68,7 +68,10 @@
 						<c:if test="${empty bookInfo}">
 							<input type="text" name="publisher">
 						</c:if>
+
 					</div>
+                    </div>
+                    
                     <div>
                         <span>出版日</span><span class="care care2">必須</span>
                         <c:if test="${!empty bookInfo}">
@@ -102,6 +105,7 @@
                            <input type="text" name="description">     
                         </c:if>
                     </div>
+
 					<input type="hidden" id="bookId" name="bookId" value="${bookInfo.bookId}">
 				</div>
 			</div>
