@@ -37,10 +37,10 @@
         <div class="right">
                   
             <ul>
-                        
-                <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a></li>         
-                <li><a href="<%=request.getContextPath()%>/">ログアウト</a></li>       
-            </ul>
+
+                <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a></li>
+                <li><a href="<%=request.getContextPath()%>/">ログアウト</a></li>
+           </ul>
                 
         </div>
           

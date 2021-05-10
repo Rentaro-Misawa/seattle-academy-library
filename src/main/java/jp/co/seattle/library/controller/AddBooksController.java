@@ -124,8 +124,10 @@ public class AddBooksController {
         booksService.registBook(bookInfo);
 
 
+
         //登録した書籍の詳細情報を表示するように実装
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(booksService.getBookId()));
+
 
 
         //  詳細画面に遷移する

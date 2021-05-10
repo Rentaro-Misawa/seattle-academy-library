@@ -104,8 +104,12 @@ public class BooksService {
                 + bookInfo.getIsbn() + "','"
                 + bookInfo.getDescription() + "')";
 
+
+
         jdbcTemplate.update(sql);
     }
+
+
 
     /**
      * 書籍を更新する
