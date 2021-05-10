@@ -33,6 +33,14 @@ public class EditBooksController {
     @Autowired
     private ThumbnailService thumbnailService;
 
+
+    /**
+     * 編集するIDを取得する
+     * @param locale ローケル情報
+     * @param bookId　書籍ID
+     * @param model　モデル
+     * @return　編集画面へ遷移
+     */
     @RequestMapping(value = "/editBook", method = RequestMethod.POST) //value＝actionで指定したパラメータ
     public String login(Locale locale,
             @RequestParam("bookId") Integer bookId,
