@@ -24,8 +24,8 @@ import jp.co.seattle.library.service.ThumbnailService;
  * Handles requests for the application home page.
  */
 @Controller //APIの入り口
-public class AddBooksController {
-    final static Logger logger = LoggerFactory.getLogger(AddBooksController.class);
+public class EditBooksController {
+    final static Logger logger = LoggerFactory.getLogger(EditBooksController.class);
 
     @Autowired
     private BooksService booksService;
@@ -33,11 +33,22 @@ public class AddBooksController {
     @Autowired
     private ThumbnailService thumbnailService;
 
-    @RequestMapping(value = "/addBook", method = RequestMethod.GET) //value＝actionで指定したパラメータ
-    //RequestParamでname属性を取得
-    public String login(Model model) {
-        return "addBook";
+
+    /**
+     * 編集するIDを取得する
+     * @param locale ローケル情報
+     * @param bookId　書籍ID
+     * @param model　モデル
+     * @return　編集画面へ遷移
+     */
+    @RequestMapping(value = "/editBook", method = RequestMethod.POST) //value＝actionで指定したパラメータ
+    public String login(Locale locale,
+            @RequestParam("bookId") Integer bookId,
+            Model model) {
+        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+        return "editBook";
     }
+
 
     /**
      * 書籍情報を登録する
@@ -50,26 +61,32 @@ public class AddBooksController {
      * @return 遷移先画面
      */
     @Transactional
-    @RequestMapping(value = "/insertBook", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
+    @RequestMapping(value = "/updateBook", method = RequestMethod.POST, produces = "text/plain;charset=utf-8")
     public String insertBook(Locale locale,
+            @RequestParam("bookId") int bookId,
             @RequestParam("title") String title,
             @RequestParam("author") String author,
-            @RequestParam("publisher") String publisher,
+            @RequestParam("publish_date") String publish_date,
             @RequestParam("isbn") String isbn,
-            @RequestParam("publishDate") String publishDate,
             @RequestParam("description") String description,
+            @RequestParam("publisher") String publisher,
             @RequestParam("thumbnail") MultipartFile file,
+
+
             Model model) {
         logger.info("Welcome insertBooks.java! The client locale is {}.", locale);
 
         // パラメータで受け取った書籍情報をDtoに格納する。
+        //タスク５で説明文、ISBN、出版日を追加
         BookDetailsInfo bookInfo = new BookDetailsInfo();
+        bookInfo.setBookId(bookId);
         bookInfo.setTitle(title);
         bookInfo.setAuthor(author);
         bookInfo.setPublisher(publisher);
         bookInfo.setIsbn(isbn);
-        bookInfo.setPublishDate(publishDate);
+        bookInfo.setPublishDate(publish_date);
         bookInfo.setDescription(description);
+
 
         // クライアントのファイルシステムにある元のファイル名を設定する
         String thumbnail = file.getOriginalFilename();
@@ -89,50 +106,50 @@ public class AddBooksController {
                 // 異常終了時の処理
                 logger.error("サムネイルアップロードでエラー発生", e);
                 model.addAttribute("bookDetailsInfo", bookInfo);
-                return "addBook";
+                return "editBook";
             }
 
         }
-        //バリデーションチェック　
+            //バリデーションチェック　
 
-        //ISBN（IF文を使用）
-        boolean isValidIsbn = isbn.matches("[0-9]{13}|[0-9]{10}|[0-9]{0}");
-        boolean flag = false;
+            //ISBN（IF文を使用）
+            boolean isValidIsbn = isbn.matches("[0-9]{13}|[0-9]{10}|[0-9]{0}");
+            boolean flag = false;
 
-        if (!(isValidIsbn)) {
-            model.addAttribute("isbnError", "ISBNの桁数または半角数字が正しくありません");
-            flag = true;
-        }
+            if (!(isValidIsbn)) {
+                model.addAttribute("isbnError", "ISBNの桁数または半角数字が正しくありません");
+                flag = true;
+            }
 
-        //日付（トライキャッチを使う）
-        try {
-            DateFormat df = new SimpleDateFormat("yyyyMMdd");
-            df.setLenient(false);
-            df.parse(publishDate);
+            //日付（トライキャッチを使う）
+            //数字の８桁かどうかをチェック
+            try {
+                DateFormat df = new SimpleDateFormat("yyyyMMdd");
+                df.setLenient(false);
+                df.parse(publish_date);
 
-        } catch (ParseException p) {
-            model.addAttribute("publishDateError", "出版日は半角英数のYYYYMMDD形式で入力してください");
-            flag = true;
+            } catch (ParseException p) {
+                model.addAttribute("publishDateError", "出版日は半角英数のYYYYMMDD形式で入力してください");
+                flag = true;
+                p.printStackTrace();
 
-        }
-        if (flag) {
-            return "addBook";
-        }
-
-
-        // 書籍情報を新規登録する
-        booksService.registBook(bookInfo);
-
+            }
+            if (flag) {
+                model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+                return "editBook";
+            }
 
 
-        //登録した書籍の詳細情報を表示するように実装
-        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(booksService.getBookId()));
+        // 書籍情報を編集する
+        booksService.editBook(bookInfo);
 
 
+        // 登録した書籍の詳細情報を表示
+
+        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
         //  詳細画面に遷移する
         return "details";
-
     }
 
 }

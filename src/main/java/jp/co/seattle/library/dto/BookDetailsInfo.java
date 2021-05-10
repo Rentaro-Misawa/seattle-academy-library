@@ -24,9 +24,9 @@ public class BookDetailsInfo {
 
     private String thumbnailName;
 
-    private String isbn;
-
     private String publishDate;
+
+    private String isbn;
 
     private String description;
 
