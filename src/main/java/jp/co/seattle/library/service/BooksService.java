@@ -18,6 +18,7 @@ import jp.co.seattle.library.rowMapper.BookInfoRowMapper;
  * 
  *  booksテーブルに関する処理を実装する
  */
+
 @Service
 public class BooksService {
     final static Logger logger = LoggerFactory.getLogger(BooksService.class);
@@ -61,6 +62,7 @@ public class BooksService {
      * @return　データベースからBookIDの最大値を取得
      */
     public int getBookId() {
+
         String sql = "SELECT MAX(id) FROM books";
 
         jdbcTemplate.queryForObject(sql, Integer.class);
@@ -69,10 +71,12 @@ public class BooksService {
 
     }
 
+
     /**
      * 書籍を削除する
      * @param bookId
      */
+
     public void deleteBooks(int bookId) {
 
         String sql = "DELETE FROM books WHERE ID=" + bookId + ";";

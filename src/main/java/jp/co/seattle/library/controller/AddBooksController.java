@@ -91,6 +91,7 @@ public class AddBooksController {
                 model.addAttribute("bookDetailsInfo", bookInfo);
                 return "addBook";
             }
+
         }
         //バリデーションチェック　
 
@@ -118,15 +119,18 @@ public class AddBooksController {
             return "addBook";
         }
 
+
         // 書籍情報を新規登録する
         booksService.registBook(bookInfo);
 
 
-        // 登録した書籍の詳細情報を表示するように実装
+        //登録した書籍の詳細情報を表示するように実装
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(booksService.getBookId()));
+
 
         //  詳細画面に遷移する
         return "details";
+
     }
 
 }
