@@ -43,9 +43,13 @@ public class BlukAddController {
         return "BulkRegist";
     }
 
+
     /**
-     * 書籍情報を一括で登録する
-     *
+     *  書籍情報を一括で登録する
+     * @param locale ロケール情報
+     * @param file　ダウンロードしたCSVファイル
+     * @param model　モデル
+     * @return 一括登録画面に遷移
      */
     @Transactional
     //JSPからのリクエストを受けている
@@ -58,7 +62,7 @@ public class BlukAddController {
         //タスク８　ファイルの読み込み
         List<String[]> lines = new ArrayList<String[]>();
         List<String> errorlist = new ArrayList<String>();
-        int num = 0;
+        int linenum = 0;
         String line = null;
 
         try {
@@ -70,21 +74,21 @@ public class BlukAddController {
                 String[] data = new String[6];
                 data = line.split(",");
                 lines.add(data);
-                num++;
+                linenum++;
 
                 //必須項目はあるか
                 //要素番号が０〜３番目までをチェッく
                 if (StringUtils.isEmpty(data[0]) || StringUtils.isEmpty(data[1]) || StringUtils.isEmpty(data[2])
                         || StringUtils.isEmpty(data[3])) {
                     //エラーメッセージをLISTに格納
-                    errorlist.add(num + "行目" + "必須項目がありません。");
+                    errorlist.add(linenum + "行目" + "必須項目がありません。");
                 }
 
                 //文字数や形式は合っているか(バリデーションチェック）
                 //ISBN(IF文を使用）
                 boolean isValidIsbn = data[4].matches("[0-9]{13}|[0-9]{10}|[0-9]{0}");
                 if (!(isValidIsbn)) {
-                    errorlist.add(num + "行目" + "ISBNの桁数または半角数字が正しくありません");
+                    errorlist.add(linenum + "行目" + "ISBNの桁数または半角数字が正しくありません");
 
                 }
                 //出版日（try-catchを使用）
@@ -94,7 +98,7 @@ public class BlukAddController {
                     df.parse(data[3]);
 
                 } catch (ParseException p) {
-                    errorlist.add(num + "行目" + "出版日は半角英数のYYYYMMDD形式で入力してください");
+                    errorlist.add(linenum + "行目" + "出版日は半角英数のYYYYMMDD形式で入力してください");
 
                 }
                 //LISTで読み取った本の書籍情報を格納
