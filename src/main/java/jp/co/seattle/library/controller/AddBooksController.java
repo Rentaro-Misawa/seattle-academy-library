@@ -131,6 +131,7 @@ public class AddBooksController {
 
 
         //  詳細画面に遷移する
+        model.addAttribute("rentStatus", booksService.getRentStatus(booksService.getBookId()));
         return "details";
 
     }

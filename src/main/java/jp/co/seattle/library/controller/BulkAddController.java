@@ -31,8 +31,8 @@ import jp.co.seattle.library.service.BooksService;
  * Handles requests for the application home page.
  */
 @Controller //APIの入り口
-public class BlukAddController {
-    final static Logger logger = LoggerFactory.getLogger(BlukAddController.class);
+public class BulkAddController {
+    final static Logger logger = LoggerFactory.getLogger(BulkAddController.class);
 
     @Autowired
     private BooksService booksService;
@@ -77,7 +77,7 @@ public class BlukAddController {
                 linenum++;
 
                 //必須項目はあるか
-                //要素番号が０〜３番目までをチェッく
+                //要素番号が０〜３番目までをチェック
                 if (StringUtils.isEmpty(data[0]) || StringUtils.isEmpty(data[1]) || StringUtils.isEmpty(data[2])
                         || StringUtils.isEmpty(data[3])) {
                     //エラーメッセージをLISTに格納

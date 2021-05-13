@@ -41,6 +41,29 @@ public class BooksService {
     }
 
     /**
+     * 貸し出し中の書籍IDに紐づく書籍詳細情報を取得する
+     * 貸し出しステータスを表示する
+     * @param bookId 書籍ID
+     * @return rentStatus　貸し出しステータス
+     */
+    //書籍が貸し出し中かどうかを判断する
+    public String getRentStatus(int bookId) {
+
+        // JSPに渡すデータを設定する
+        String sql = "SELECT COUNT(*) FROM rentbooks WHERE book_id=" + bookId;
+        int count = jdbcTemplate.queryForObject(sql, Integer.class);
+        String rentStatus = "貸し出し可";
+
+        if (count == 1) {
+            rentStatus = "貸し出し中";
+        }
+
+        return rentStatus;
+
+    }
+
+
+    /**
      * 書籍IDに紐づく書籍詳細情報を取得する
      *
      * @param bookId 書籍ID
@@ -58,7 +81,7 @@ public class BooksService {
     }
 
     /**
-     * 追加したした書籍のIDを取得
+     * 追加した書籍のIDを取得
      * @return　データベースからBookIDの最大値を取得
      */
     public int getBookId() {
@@ -73,13 +96,25 @@ public class BooksService {
 
 
     /**
-     * 書籍を削除する
+     * booksテーブルから書籍を削除する
      * @param bookId
      */
 
     public void deleteBooks(int bookId) {
 
         String sql = "DELETE FROM books WHERE ID=" + bookId + ";";
+
+        jdbcTemplate.update(sql);
+    }
+
+    /**
+     * rentbooksテーブルから書籍IDを削除する
+     * @param bookId
+     */
+
+    public void deleteRentBooks(int bookId) {
+
+        String sql = "DELETE FROM rentbooks WHERE book_id=" + bookId + ";";
 
         jdbcTemplate.update(sql);
     }
@@ -105,6 +140,16 @@ public class BooksService {
                 + bookInfo.getDescription() + "')";
 
 
+
+        jdbcTemplate.update(sql);
+    }
+
+    /**
+     * 貸し出しテーブルに書籍IDを登録する
+     * @param bookId　書籍ID
+     */
+    public void rentBooks(int bookId) {
+        String sql = "INSERT INTO rentbooks(book_id) VALUES (" + bookId + ")";
 
         jdbcTemplate.update(sql);
     }
