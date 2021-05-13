@@ -15,41 +15,39 @@ import org.springframework.web.bind.annotation.RequestParam;
 import jp.co.seattle.library.service.BooksService;
 
 /**
- * 削除コントローラー
+ * 返却コントローラー
+ * 
  */
 @Controller //APIの入り口
-public class DeleteBookController {
-    final static Logger logger = LoggerFactory.getLogger(DeleteBookController.class);
+public class ReturnBooksController {
+    final static Logger logger = LoggerFactory.getLogger(RentBooksController.class);
 
     @Autowired
     private BooksService booksService;
 
-
     /**
-     * 対象書籍を削除する
-     *
+     * rentbooksテーブルの対象書籍を返却する
      * @param locale ロケール情報
      * @param bookId 書籍ID
      * @param model モデル情報
      * @return 遷移先画面名
      */
     @Transactional
-    @RequestMapping(value = "/deleteBook", method = RequestMethod.POST)
-    public String deleteBook(
+    @RequestMapping(value = "/returnBook", method = RequestMethod.POST)
+    public String returnBook(
             Locale locale,
-          //JSPから受け取ったbookIdをコントローラーで使えるように変換
             @RequestParam("bookId") Integer bookId,
             Model model) {
         logger.info("Welcome delete! The client locale is {}.", locale);
-        
-      //rentテーブルに本があるかどうがを確認
+
+        //rentテーブルに本があるかどうがを確認
         //rentStatusには貸し出し中または貸し出し可が入ってくる
         String rentStatus = booksService.getRentStatus(bookId);
 
-        if (rentStatus.equals("貸し出し中")) {
-            //貸し出し中の時にこの処理を行う
+        if (rentStatus.equals("貸し出し可")) {
+            //貸し出し可の時にこの処理を行う
             //エラーメッセージを表示
-            model.addAttribute("errorMessage", "この本は貸し出し中のため削除出来ません。");
+            model.addAttribute("errorMessage", "この本は貸し出し可のため返却出来ません。");
 
             model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
             model.addAttribute("rentStatus", rentStatus);
@@ -57,15 +55,17 @@ public class DeleteBookController {
 
         }
 
-        //データベースに登録している書籍を削除する
-        booksService.deleteBooks(bookId);
+        //booksServiceクラスのrentbooksテーブルの書籍IDを削除する
+        booksService.deleteRentBooks(bookId);
 
-        // 書籍リストを取得
-        model.addAttribute("bookList", booksService.getBookList());
+        //貸し出しステータスを表示
+        model.addAttribute("rentStatus", booksService.getRentStatus(booksService.getBookId()));
 
-        //ホーム画面に遷移する。
-        return "home";
+        //登録している詳細情報を表示
+        model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
+        //詳細画面に遷移
+        return "details";
 
     }
 
