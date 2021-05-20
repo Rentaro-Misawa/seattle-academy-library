@@ -45,6 +45,22 @@ public class EditBooksController {
     public String login(Locale locale,
             @RequestParam("bookId") Integer bookId,
             Model model) {
+        
+        //rentテーブルに本があるかどうがを確認
+        //rentStatusには貸し出し中または貸し出し可が入ってくる
+        String rentStatus = booksService.getRentStatus(bookId);
+
+        if (rentStatus.equals("貸し出し中")) {
+            //貸し出し中の時にこの処理を行う
+            //エラーメッセージを表示
+            model.addAttribute("errorMessage", "この本は貸し出し中のため編集出来ません。");
+            //書籍の詳細を表示
+            model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+            //貸し出しステータスを表示
+            model.addAttribute("rentStatus", rentStatus);
+            //詳細画面に遷移
+            return "details";
+        }
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
         return "editBook";
     }
@@ -143,9 +159,10 @@ public class EditBooksController {
         // 書籍情報を編集する
         booksService.editBook(bookInfo);
 
+        //貸し出しステータスを表示
+        model.addAttribute("rentStatus", booksService.getRentStatus(booksService.getBookId()));
 
         // 登録した書籍の詳細情報を表示
-
         model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
 
         //  詳細画面に遷移する
