@@ -19,15 +19,25 @@
         </div>
         <div class="right">
             <ul>
-                <li><a href="<%= request.getContextPath()%>/home" class="menu">Home</a></li>
-                <li><a href="<%= request.getContextPath()%>/">ログアウト</a></li>
+                <li><a href="<%=request.getContextPath()%>/home" class="menu">Home</a></li>
+                <li><a href="<%=request.getContextPath()%>/">ログアウト</a></li>
             </ul>
         </div>
     </header>
     <main>
         <h1>Home</h1>
-        <a href="<%= request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a>
-        <a href="<%= request.getContextPath()%>/BulkRegist" class="btn_bulk_book">一括登録</a>
+        <form method="post" action="<%=request.getContextPath()%>/search">
+            <div class="cp_ipradio">
+                <input type="radio" name="cpipr03" id="a_rb1" /> <label for="a_rb1">部分一致</label> <input type="radio" name="cpipr03" id="a_rb2" />
+                 <label for="a_rb2">完全一致</label> <input id="search-input" placeholder="検索したいタイトルを入力してください。" type="text" name="search-key"> 
+                 <input id="search-buttom" class="fas" type="submit" value="">
+                <c:if test="${!empty Notsearch}">
+                    <div class="error">${Notsearch}</div>
+                </c:if>
+            </div>
+        </form>
+        <a href="<%=request.getContextPath()%>/addBook" class="btn_add_book">書籍の追加</a> <a href="<%=request.getContextPath()%>/BulkRegist" class="btn_bulk_book">一括登録</a>
+        <form method="get" action="http://www.google.co.jp/search" target="_blank"></form>
         <div class="content_body">
             <c:if test="${!empty resultMessage}">
                 <div class="error_msg">${resultMessage}</div>
@@ -37,22 +47,18 @@
                     <c:forEach var="bookInfo" items="${bookList}">
                         <div class="books">
                             <form method="post" class="book_thumnail" action="<%=request.getContextPath()%>/details">
-                                <a href="javascript:void(0)" onclick="this.parentNode.submit();">
-                                    <c:if test="${empty bookInfo.thumbnail}">
+                                <a href="javascript:void(0)" onclick="this.parentNode.submit();"> <c:if test="${bookDetailsInfo.thumbnail == 'null'}">
                                         <img class="book_noimg" src="resources/img/noImg.png">
-                                    </c:if>
-                                    <c:if test="${!empty bookInfo.thumbnail}">
+                                    </c:if> <c:if test="${bookDetailsInfo.thumbnail != 'null'}">
                                         <img class="book_noimg" src="${bookInfo.thumbnail}">
                                     </c:if>
-                                </a>
-                            <input type="hidden" name="bookId" value="${bookInfo.bookId}">
+                                </a> <input type="hidden" name="bookId" value="${bookInfo.bookId}">
                             </form>
                             <ul>
                                 <li class="book_title">${bookInfo.title}</li>
                                 <li class="book_author">${bookInfo.author}</li>
                                 <li class="book_publisher">${bookInfo.publisher}</li>
                                 <li class="book_publishDate">${bookInfo.publishDate}</li>
-                                
                             </ul>
                         </div>
                     </c:forEach>
