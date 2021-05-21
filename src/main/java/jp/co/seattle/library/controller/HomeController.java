@@ -38,10 +38,10 @@ public class HomeController {
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     //RequestParamでname属性を取得
     public String insertBook(Locale locale,
-            @RequestParam("search-key") String searchkey,
+            @RequestParam("search-key") String searchKey,
             Model model) {
         //検索した書籍を変数searchListに格納
-        List<BookInfo> searchList = new ArrayList<BookInfo>(booksService.getSearchPartBookList(searchkey));
+        List<BookInfo> searchList = new ArrayList<BookInfo>(booksService.getSearchPartBookList(searchKey));
         //検索したい書籍がない場合はエラーメッセージを表示
         if (CollectionUtils.isEmpty(searchList)) {
             //エラーメッセージを表示
@@ -52,7 +52,7 @@ public class HomeController {
             return "home";
         }
         //DBから書籍リストを取得し、ホーム画面に表示
-        model.addAttribute("bookList", booksService.getSearchPartBookList(searchkey));
+        model.addAttribute("bookList", searchList);
         //ホーム画面に遷移する
         return "home";
     }

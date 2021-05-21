@@ -44,10 +44,10 @@ public class BooksService {
      * 検索結果に該当する書籍リストを取得する
      * @return　書籍リスト
      */
-    public List<BookInfo> getSearchPartBookList(String searchkey) {
+    public List<BookInfo> getSearchPartBookList(String searchKey) {
         //検索した書籍を部分一致で取得（LIKE句を使用）
         List<BookInfo> getedSearchBookList = jdbcTemplate.query(
-                "SELECT * FROM books WHERE title LIKE '%" + searchkey + "%'ORDER BY title ASC",
+                "SELECT * FROM books WHERE title LIKE '%" + searchKey + "%'ORDER BY title ASC",
                 new BookInfoRowMapper());
         return getedSearchBookList;
     }
