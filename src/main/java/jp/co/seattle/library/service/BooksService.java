@@ -32,12 +32,24 @@ public class BooksService {
      */
     public List<BookInfo> getBookList() {
 
-        // TODO 取得したい情報を取得するようにSQLを修正
+        //取得したい情報を取得するようにSQLを修正
         List<BookInfo> getedBookList = jdbcTemplate.query(
                 "select id,title,author,publisher,publish_date,thumbnail_url from books order by title asc",
                 new BookInfoRowMapper());
 
         return getedBookList;
+    }
+
+    /**
+     * 検索結果に該当する書籍リストを取得する
+     * @return　書籍リスト
+     */
+    public List<BookInfo> getSearchPartBookList(String searchKey) {
+        //検索した書籍を部分一致で取得（LIKE句を使用）
+        List<BookInfo> getedSearchBookList = jdbcTemplate.query(
+                "SELECT * FROM books WHERE title LIKE '%" + searchKey + "%'ORDER BY title ASC",
+                new BookInfoRowMapper());
+        return getedSearchBookList;
     }
 
     /**
