@@ -1,0 +1,59 @@
+.cp_ipradio {
+	width: 90%;
+	margin: 2em auto;
+	text-align: left;
+	font-size: 1px;
+}
+.cp_ipradio input[type='radio'] {
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+	
+}
+.cp_ipradio label {
+	font-size: 12px;
+	position: relative;
+	display: inline-block;
+	margin-right: 5px;
+	padding-right: 10px;
+	padding-left: 35px;
+	cursor: pointer;
+}
+.cp_ipradio label::before {
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	left: 0;
+	display: block;
+	width: 12px;
+	height: 12px;
+	content: ' ';
+	border: 2px solid #7db4e6;
+	border-radius: 2px;
+}
+.cp_ipradio input[type='radio'] + label::before {
+	border-radius: 18px;
+}
+.cp_ipradio input[type='radio']:checked + label {
+	padding-left: 10px;
+	color: #ffffff;
+}
+.cp_ipradio input[type='radio']:checked + label::before {
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: #7db4e6;
+}
+/* Transition */
+.cp_ipradio label, .cp_ipradio label::before {
+	-webkit-transition: 0.25s all ease;
+	        transition: 0.25s all ease;
+}
+#search-input{
+	width: 25%;
+    border: solid 1px #7db4e6;
+    margin-top: 20px;
+}
+#search-buttom{
+	margin-top: 20px;
+}

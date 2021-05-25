@@ -53,12 +53,12 @@
                 <div>
                     <span>書籍の画像</span> <span class="care care1">任意</span>
                     <div class="book_thumnail">
-                        <c:if test="${bookInfo.thumbnailUrl == 'null'}">
+                        <c:if test="${bookDetailsInfo.thumbnailUrl == 'null'}">
                             <a href="resources/img/noImg.png" data-lightbox="image-1">
                                 <img class="book_noimg" src="resources/img/noImg.png" alt="NO IMAGE">
                             </a>
                         </c:if>
-                        <c:if test="${bookInfo.thumbnailUrl != 'null'}">
+                        <c:if test="${bookDetailsInfo.thumbnailUrl != 'null'}">
                             <a href="${bookInfo.thumbnailUrl}" data-lightbox="image-1"> 
                                 <img class="book_noimg" src="${bookInfo.thumbnailUrl}">
                             </a>
@@ -70,28 +70,28 @@
                     <div>
                         <span>書籍名</span><span class="care care2">必須</span>
                         <c:if test="${!empty bookDetailsInfo}">
-                            <input type="text" name="title" value="${bookDetailsInfo.title}">
+                            <input required type="text" name="title" value="${bookDetailsInfo.title}">
                         </c:if>
                         <c:if test="${empty bookDetailsInfo}">
-                            <input type="text" name="title" autocomplete="off">
+                            <input required type="text" name="title" autocomplete="off">
                         </c:if>
                     </div>
                     <div>
                         <span>著者名</span><span class="care care2">必須</span>
                         <c:if test="${!empty bookDetailsInfo}">
-                            <input type="text" name="author" value="${bookDetailsInfo.author}">
+                            <input required type="text" name="author" value="${bookDetailsInfo.author}">
                         </c:if>
                         <c:if test="${empty bookDetailsInfo}">
-                            <input type="text" name="author" autocomplete="off">
+                            <input required type="text" name="author" autocomplete="off">
                         </c:if>
                     </div>
                     <div>
                         <span>出版社</span><span class="care care2">必須</span>
                         <c:if test="${!empty bookDetailsInfo}">
-                            <input type="text" name="publisher" value="${bookDetailsInfo.publisher}">
+                            <input required type="text" name="publisher" value="${bookDetailsInfo.publisher}">
                         </c:if>
                         <c:if test="${empty bookDetailsInfo}">
-                            <input type="text" name="publisher">
+                            <input required type="text" name="publisher">
                         </c:if>
                     </div>
                     <div>

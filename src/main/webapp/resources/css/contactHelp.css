@@ -1,0 +1,79 @@
+.lead-form{
+  text-align: center;
+  font-size:20px;
+}
+form{
+  width:460px;
+  margin:0 auto;
+}
+.item{
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.label{
+  float: left;
+  margin-right: 20px;
+  width:200px;
+  border-left: solid 7px #4169e1;
+  padding-left: 10px;
+  border-top:50px;
+}
+.inputs{
+  float: left;
+  width:400px;
+}
+input[type="text"],input[type="email"]{
+  border: solid 1px #7db4e6;
+  border-radius:5px;
+  padding:10px;
+  font-size: 15px;
+}
+textarea{
+  border: solid 1px #7db4e6;
+  border-radius:5px;
+  padding: 10px;
+  height: 160px;
+  font-size: 15px;
+}
+.btn-area{
+  text-align: center;
+  
+}
+input[type="submit"]{
+  background: #e0505c;
+  border: none;
+  color: white;
+  font-size:17px;
+  font-weight:bold;
+  padding: 10px 20px;
+  border-radius:50px;
+  margin: 0 5px;
+  box-shadow: 0 0 8px gray;
+}
+input[type="reset"]{
+  background: #7db4e6;
+  border: none;
+  color: white;
+  font-size:17px;
+  font-weight:bold;
+  padding: 10px 20px;
+  border-radius:50px;
+  margin: 0 5px;
+  box-shadow: 0 0 8px gray;
+}
+.question{
+	font-size:80%;
+	font-weight:bold;
+	margin: 10px 5px 5px 20px;
+}
+#contact_help{
+	font-size: 20PX;
+    margin-bottom: 20px;
+}
+.answer{
+	font-size:60%;
+	font-weight:bold;
+	width: 50%;
+	margin-bottom: 30px;
+	margin-left:50px;
+}

@@ -39,6 +39,8 @@ public class ReturnBooksController {
             @RequestParam("bookId") Integer bookId,
             Model model) {
         logger.info("Welcome delete! The client locale is {}.", locale);
+        //booksServiceクラスのrentbooksテーブルの書籍IDを削除する
+        booksService.deleteRentBooks(bookId);
 
         //rentテーブルに本があるかどうがを確認
         //rentStatusには貸し出し中または貸し出し可が入ってくる
@@ -48,15 +50,13 @@ public class ReturnBooksController {
             //貸し出し可の時にこの処理を行う
             //エラーメッセージを表示
             model.addAttribute("errorMessage", "この本は貸し出し可のため返却出来ません。");
-
+            //書籍の詳細を表示
             model.addAttribute("bookDetailsInfo", booksService.getBookInfo(bookId));
+            //貸し出しステータスを表示
             model.addAttribute("rentStatus", rentStatus);
             return "details";
 
         }
-
-        //booksServiceクラスのrentbooksテーブルの書籍IDを削除する
-        booksService.deleteRentBooks(bookId);
 
         //貸し出しステータスを表示
         model.addAttribute("rentStatus", booksService.getRentStatus(booksService.getBookId()));
