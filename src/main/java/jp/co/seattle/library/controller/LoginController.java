@@ -44,12 +44,12 @@ public class LoginController {
             @RequestParam("password") String password,
             Model model) {
 
-
+        //userテーブルからユーザー情報（メールとパスワード）を取得
         UserInfo selectedUserInfo = usersService.selectUserInfo(email, password);
 
         // TODO パスワードとメールアドレスの組み合わせ存在
         if (selectedUserInfo == null) {
-            model.addAttribute("errorMessage", "パスワードとメールアドレスが一致しません。");
+            model.addAttribute("loginError", "パスワードとメールアドレスが一致しません。");
             return "login";
         }
 

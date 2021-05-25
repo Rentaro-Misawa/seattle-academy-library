@@ -57,4 +57,18 @@ public class UsersService {
         }
     }
 
+    /**
+     * お問い合わせ内容をCONTACTテーブルに登録
+     * @param name　ユーザーの名前
+     * @param email　ユーザーのメールアドレス
+     */
+    public void insertContact(String name, String email, String whatContents, String contact) {
+        //お問い合わせ情報をCONTACTテーブルに格納
+        String sql = "INSERT INTO contact(name,email,whatContents,contact,reg_date,upd_date) VALUES ('" + name + "','"
+                + email + "','"
+                + whatContents + "','" + contact + "'," + "sysdate()," + "sysdate())";
+
+        jdbcTemplate.update(sql);
     }
+
+}

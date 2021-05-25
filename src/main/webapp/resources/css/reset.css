@@ -80,3 +80,14 @@ hr {
 input, select {
     vertical-align:middle;
 }
+h1{
+ font-size:20px;
+ border-bottom:#7db4e6 solid 5px;
+}
+h2{
+ font-size:27px;
+ border-bottom:#7db4e6 dotted 7px ;
+ width: 60%;
+ margin-bottom:17px;
+ margin-top:80px;
+}
